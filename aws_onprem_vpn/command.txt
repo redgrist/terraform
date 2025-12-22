@@ -16,3 +16,8 @@ scieżaka do klucza ~/.ssh/aws_test_ed25519.pub
 
 
 ssh -i ~/.ssh/aws_test_ed25519 ec2-user@10.50.10.39
+
+
+pokazanie kluczy:
+terraform output vpn_tunnel1_psk
+terraform output vpn_tunnel2_psk

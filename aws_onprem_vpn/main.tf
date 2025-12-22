@@ -233,4 +233,22 @@ output "vgw_id" {
 output "cgw_id" {
   value = aws_customer_gateway.cgw.id
 }
+output "vpn_tunnel1_psk" {
+  value     = aws_vpn_connection.vpn.tunnel1_preshared_key
+  sensitive = true
+}
+
+output "vpn_tunnel2_psk" {
+  value     = aws_vpn_connection.vpn.tunnel2_preshared_key
+  sensitive = true
+}
+output "vpn_tunnel1_address" {
+  value       = aws_vpn_connection.vpn.tunnel1_address
+  description = "AWS VPN Tunnel 1 IP"
+}
+
+output "vpn_tunnel2_address" {
+  value       = aws_vpn_connection.vpn.tunnel2_address
+  description = "AWS VPN Tunnel 2 IP"
+}
 
