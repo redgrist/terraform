@@ -199,6 +199,7 @@ resource "aws_instance" "vpn_host" {
   ami                    = data.aws_ami.al2023.id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.private.id
+  private_ip             = "10.50.10.50"
   vpc_security_group_ids = [aws_security_group.vpn_only.id]
   key_name               = aws_key_pair.this.key_name
 
