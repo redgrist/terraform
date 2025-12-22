@@ -1,0 +1,9 @@
+terraform fmt
+terraform init
+terraform apply
+
+
+
+/usr/local/etc/swanctl/conf.d/aws.conf
+/usr/local/etc/swanctl/secrets.d/aws.secrets
+ssh -i ~/.ssh/id_ed25519 ec2-user@10.50.10.245
