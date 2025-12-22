@@ -21,6 +21,7 @@ variable "onprem_cidr" {
 # Twój PUBLICZNY IP (Customer Gateway) – WAN OPNsense
 variable "onprem_public_ip" {
   type = string
+  description = "31.178.13.215"
 }
 
 variable "vpc_cidr" {
@@ -46,5 +47,6 @@ variable "instance_type" {
 # Ścieżka do publicznego klucza SSH do EC2
 variable "ssh_public_key_path" {
   type = string
+  description = "/home/redgrist/.ssh/aws_test_ed25519.pub"
 }
 
