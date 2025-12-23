@@ -1,0 +1,23 @@
+terraform fmt
+terraform init
+terraform apply
+
+
+
+/usr/local/etc/swanctl/conf.d/aws.conf
+psk dodaje secrets w UI opensense
+swanctl --initiate --ike aws-tunnel-1
+swanctl --initiate --ike aws-tunnel-2
+
+
+Terraform:
+IP publiczne wiadomo
+scieżaka do klucza ~/.ssh/aws_test_ed25519.pub
+
+
+ssh -i ~/.ssh/aws_test_ed25519 ec2-user@10.50.10.39
+
+
+pokazanie kluczy:
+terraform output vpn_tunnel1_psk
+terraform output vpn_tunnel2_psk

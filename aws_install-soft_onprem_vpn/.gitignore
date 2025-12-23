@@ -1,0 +1,23 @@
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
+
+# tfvars (sekrety)
+terraform.tfvars
+
+# VPN / secrets
+vpn-*.txt
+*.secrets
+
+# SSH
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# OS
+.DS_Store
+
