@@ -49,4 +49,3 @@ variable "ssh_public_key_path" {
   type        = string
   description = "/home/redgrist/.ssh/aws_test_ed25519.pub"
 }
-
