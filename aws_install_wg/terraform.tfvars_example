@@ -1,0 +1,23 @@
+aws_region = "eu-central-1"
+az         = "eu-central-1a"
+name       = "aws-wg-client"
+
+ssh_public_key_path  = "/home/redgrist/.ssh/aws_test_ed25519.pub"
+ssh_private_key_path = "/home/redgrist/.ssh/aws_test_ed25519"
+
+# Twój publiczny IP (OPNsense WAN) w CIDR /32
+onprem_public_ip = "31.178.13.215/32"
+
+# WireGuard
+wg_endpoint      = "31.178.13.215"
+wg_endpoint_port = 51821
+
+wg_address              = "10.0.0.5/32"
+wg_dns                  = "1.1.1.1"
+wg_allowed_ips          = "0.0.0.0/0,::/0"
+wg_persistent_keepalive = 25
+
+# Wklej swoje klucze:
+wg_private_key     = ""
+wg_peer_public_key = ""
+wg_preshared_key   = ""
