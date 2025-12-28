@@ -1,0 +1,10 @@
+ssh -i /home/redgrist/.ssh/aws_test_ed25519 ec2-user@10.0.0.5
+
+terraform state rm aws_ebs_volume.data
+terraform destroy
+
+
+
+(Alternatywnie możesz też usunąć ze stanu attachment, jeśli blokuje):
+terraform state rm aws_volume_attachment.data
+

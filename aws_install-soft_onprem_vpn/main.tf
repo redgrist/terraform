@@ -205,24 +205,22 @@ resource "aws_instance" "vpn_host" {
 
   associate_public_ip_address = false
 
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    host        = self.private_ip
-    private_key = file(var.ssh_private_key_path)
-    timeout     = "5m"
-  }
+  user_data = <<-EOF
+    #!/bin/bash
+    set -euxo pipefail
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo dnf -y install docker",
-      "sudo systemctl enable --now docker",
-      "sudo mkdir -p /bw-data",
-      "sudo docker run -d --restart=unless-stopped --name bitwarden -v /bw-data:/data -p 80:80 bitwardenrs/server:latest"
-    ]
-  }
+    # Amazon Linux 2023
+    dnf -y update
+    dnf -y install docker
+    systemctl enable --now docker
 
-  tags = { Name = "${var.name}-ec2-vpn" }
+    # testowy kontener WWW (na 8080)
+    docker run -d --name web -p 8080:80 nginx:alpine
+  EOF
+
+  tags = {
+    Name = "${var.name}-ec2-vpn"
+  }
 }
 
 

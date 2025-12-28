@@ -1,0 +1,72 @@
+#!/bin/bash
+set -euxo pipefail
+
+# --- Packages ---
+dnf -y update
+dnf -y install wireguard-tools jq util-linux
+
+# --- WireGuard config ---
+mkdir -p /etc/wireguard
+chmod 700 /etc/wireguard
+
+cat >/etc/wireguard/wg0.conf <<'EOF'
+[Interface]
+PrivateKey = ${wg_private_key}
+Address = ${wg_address}
+DNS = ${wg_dns}
+
+# (optional) you can pin MTU if needed:
+# MTU = 1420
+
+[Peer]
+PublicKey = ${wg_peer_public_key}
+%{ if wg_preshared_key != "" ~}
+PresharedKey = ${wg_preshared_key}
+%{ endif ~}
+AllowedIPs = ${wg_allowed_ips}
+Endpoint = ${wg_endpoint}:${wg_endpoint_port}
+PersistentKeepalive = ${wg_persistent_keepalive}
+EOF
+
+chmod 600 /etc/wireguard/wg0.conf
+
+# Enable and start WireGuard (wg-quick)
+systemctl enable wg-quick@wg0
+systemctl start wg-quick@wg0
+
+# --- Persistent disk mount (/data) ---
+DEV="${data_device_name}"
+MP="${mount_point}"
+
+mkdir -p "${MP}"
+
+# Wait for device
+for i in $(seq 1 30); do
+  if lsblk "${DEV}" >/dev/null 2>&1; then
+    break
+  fi
+  sleep 2
+done
+
+# If no filesystem, create ext4
+if ! blkid "${DEV}" >/dev/null 2>&1; then
+  mkfs.ext4 -F "${DEV}"
+fi
+
+UUID=$(blkid -s UUID -o value "${DEV}")
+grep -q "$UUID" /etc/fstab || echo "UUID=$UUID ${MP} ext4 defaults,nofail 0 2" >> /etc/fstab
+
+mount -a
+
+# create a directory for your data
+mkdir /data/grafana
+chmod 777 /data/grafana
+
+# start grafana with your user id and using the data directory
+docker run -d -p 3000:3000 --name=grafana \
+  --volume "/data/grafana:/var/lib/grafana" \
+  grafana/grafana
+
+# some install
+sudo dnf install traceroute -y
+
